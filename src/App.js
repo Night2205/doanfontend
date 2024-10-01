@@ -13,7 +13,7 @@ function App() {
   return (
     <Router>
       <div className='app-container'>
-        <Nav />
+        {/* <Nav /> */}
         <Switch>
           <Route path="/news">
             news
@@ -24,11 +24,11 @@ function App() {
           <Route path="/contact">
             Contact
           </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
           <Route path="/" exact>
             home
+          </Route>
+          <Route path="/login">
+            <Login />
           </Route>
           <Route path="*">
             404 Not found
