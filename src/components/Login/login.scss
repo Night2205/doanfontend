@@ -1,18 +1,88 @@
-.red {
-    border: 1px solid red;
-}
-
-.green {
-    border: 1px solid green;
-}
-
-.yellow {
-    border: 1px solid yellow;
-}
-
+/* Đảm bảo bố cục trang đăng nhập */
 .login-container {
-    .content-right {
-        border: 1px solid gray;
-        border-radius: 10px;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    /* Đảm bảo toàn bộ chiều cao màn hình được sử dụng */
+}
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+}
+
+.content-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.content-left .logo img {
+    max-width: 100%;
+    /* Đảm bảo ảnh không vượt quá phần chứa */
+    height: auto;
+    /* Giữ tỷ lệ của ảnh */
+    max-height: 200px;
+    /* Đặt giới hạn chiều cao ảnh */
+    object-fit: contain;
+    /* Đảm bảo toàn bộ ảnh hiển thị */
+}
+
+.content-left .detail {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #333;
+    text-indent: 120px;
+    text-transform: uppercase;
+    color: #39418a;
+}
+
+.content-right {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.content-right .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.content-right .logo img {
+    max-width: 50%;
+    /* Giới hạn kích thước logo theo chiều rộng */
+    height: auto;
+    object-fit: contain;
+    max-height: 100px;
+    /* Giới hạn chiều cao logo */
+}
+
+.form-control {
+    font-size: 1.2rem;
+    padding: 10px;
+}
+
+.btn {
+    font-size: 1.2rem;
+    padding: 10px 20px;
+}
+
+.forgot-password {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+hr {
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
 }
