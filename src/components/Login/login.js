@@ -1,6 +1,14 @@
-import { button } from 'bootstrap';
-import './login.scss'
+// import { button } from 'bootstrap';
+import './login.scss';
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 const Login = (props) => {
+    let history = useHistory();
+    const handldeForgotPassWord = () => {
+        alert("Vui lòng liên hệ với gmail nguyennhathuy176@gmail.com hoặc huukhen@gmail.com để được cấp lại tài khoản")
+    }
+    const handldeCreateNewAccount = () => {
+        history.push("/register");
+    }
     return (
         <div className="login-container">
             <div className="container">
@@ -22,18 +30,23 @@ const Login = (props) => {
                             <input type='password' className='form-control' placeholder='Password' />
                             <button className='btn btn-primary btn-lg'>login</button>
                             <span className='text-center'>
-                                <a className='forgot-password' href='#'>Forgot your password?</a>
+                                {/* <a href='#' className='forgot-password' onClick={() => handldeForgotPassWord()}>Forgot your password?</a> */}
+                                <div className='forgot-password' onClick={() => handldeForgotPassWord()}>
+                                    Forgot your password?
+                                </div>
                             </span>
                             <hr />
                             <div className='text-center'>
-                                <button className='btn btn-success'>Create new account</button>
+                                <button className='btn btn-success' onClick={() => handldeCreateNewAccount()}>
+                                    Create new account
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
 
             </div>
-        </div>
+        </div >
     )
 }
 

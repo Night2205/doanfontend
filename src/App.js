@@ -1,12 +1,14 @@
 import './App.scss';
 import Login from './components/Login/login';
 import Nav from './components/Navigation/Nav';
+import Register from './components/Register/Register';
 
 import {
   BrowserRouter as Router,
   Switch,
   Route
 } from "react-router-dom";
+
 
 
 function App() {
@@ -29,6 +31,9 @@ function App() {
           </Route>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/register">
+            <Register />
           </Route>
           <Route path="*">
             404 Not found
