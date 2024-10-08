@@ -3,6 +3,8 @@ import './register.scss';
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = (props) => {
     const [email, setEmail] = useState("");
@@ -22,7 +24,45 @@ const Register = (props) => {
         // })
     }, []);
 
+    const isValidInputs = () => {
+
+        if (!email) {
+            toast.error("Email Required");
+            return false;
+        }
+        if (!phone) {
+            toast.error("Phone Required");
+            return false;
+        }
+        if (!username) {
+            toast.error("UserName Required");
+            return false;
+        }
+        if (!password) {
+            toast.error("Password Required");
+            return false;
+        }
+        if (password != confirmPassWord) {
+            toast.error("Password is not same");
+            return false;
+        }
+
+        let regx = /\S+@\S+\.\S+/;
+        if (!regx.test(email)) {
+            toast.error("Invalid Email");
+            return false;
+
+        }
+
+        return true;
+    }
+
     const handldeRegister = () => {
+
+        let Check = isValidInputs();
+
+        // toast.error("Default Notification !");
+
         let userData = { email, phone, username, password };
         console.log("Check user data:", userData);
     }
@@ -74,7 +114,7 @@ const Register = (props) => {
                                     value={confirmPassWord} onChange={(event) => setConFirmPassWord(event.target.value)}
                                 />
                             </div>
-                            <button className='btn btn-primary btn-lg' onClick={() => handldeRegister()}>Register</button>
+                            <button className='btn btn-primary btn-lg' type="button" onClick={() => handldeRegister()}>Register</button>
                             <hr />
                             <div className='text-center'>
                                 <button className='btn btn-success' onClick={() => handldeAlreadyHasAccount()}>
