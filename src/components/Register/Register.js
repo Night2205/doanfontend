@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-
+import { registerNewUser } from "../../services/userService"
 const Register = (props) => {
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
@@ -75,17 +75,42 @@ const Register = (props) => {
         return true;
     }
 
-    const handldeRegister = () => {
+    const handldeRegister = async () => {
 
         let check = isValidInputs();//kiem tra dieu kien
 
         if (check === true) {//neu hop le call len sever
-            axios.post('http://localhost:3001/api/v1/register', {
-                email, phone, username, password
-            })
+            let response = await registerNewUser(email, phone, username, password)
+            let serverData = response.data;
+            if (+serverData.EC === 0) {//"+" convert chuỗi string về số nguyên 
+                toast.success(serverData.EM);
+                history.push("/login");
+            } else {
+                toast.error(serverData.EM);
+            }
         }
 
     }
+
+    const handleEmailValidation = (value) => {//check email khi 
+        let regx = /\S+@\S+\.\S+/;
+        if (!regx.test(value)) {
+            setObjCheckInput(prevState => ({ ...prevState, isValidEmail: false }));
+        } else {
+            setObjCheckInput(prevState => ({ ...prevState, isValidEmail: true }));
+        }
+        setEmail(value); // Cập nhật giá trị email
+    };
+
+    const handlePhoneValidation = (value) => {
+        const phoneRegex = /^\d{10}$/;
+        if (!phoneRegex.test(value)) {
+            setObjCheckInput(prevState => ({ ...prevState, isValidPhone: false }));
+        } else {
+            setObjCheckInput(prevState => ({ ...prevState, isValidPhone: true }));
+        }
+        setPhone(value); // Cập nhật giá trị phone
+    };
 
     return (
         <div className="register-container">
@@ -108,12 +133,14 @@ const Register = (props) => {
                                 <label>Email:</label>
                                 <input type='text' className={objCheckInput.isValidEmail ? 'form-control' : 'form-control is-invalid'} placeholder='Email'
                                     value={email} onChange={(event) => setEmail(event.target.value)}//kiem tra dieu kien Email
+                                    onBlur={(event) => handleEmailValidation(event.target.value)} // Kiểm tra khi rời khỏi
                                 />
                             </div>
                             <div className='form-group'>
                                 <label>Phone Number:</label>
                                 <input type='text' className={objCheckInput.isValidPhone ? 'form-control' : 'form-control is-invalid'} placeholder='Phone Number'
                                     value={phone} onChange={(event) => setPhone(event.target.value)}
+                                    onBlur={(event) => handlePhoneValidation(event.target.value)} // Kiểm tra khi rời khỏi trường
                                 />
                             </div>
                             <div className='form-group'>
