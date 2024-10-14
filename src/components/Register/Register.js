@@ -1,7 +1,6 @@
 // import { button } from 'bootstrap';
 import './register.scss';
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
