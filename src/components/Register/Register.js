@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import { registerNewUser } from "../../services/userService"
+import { registerNewUser } from "../../services/userService";
 const Register = (props) => {
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");

@@ -1,14 +1,18 @@
 // import { button } from 'bootstrap';
-import react, { useState } from 'react';
+import react, { useState, useRef } from 'react';
 import './login.scss';
 import { useHistory } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { loginUser } from '../../services/userService';
+
 const Login = (props) => {
     let history = useHistory();
 
     const [valueLogin, setValueLogin] = useState("");//state hoá các biến 
     const [password, setPassword] = useState("");
+
+    // Sử dụng useRef để giữ tham chiếu đến ô password
+    const passwordInputRef = useRef(null);
 
     const defaultObjValidInput = {
         isValidValueLogin: true,
@@ -29,7 +33,24 @@ const Login = (props) => {
             return;
         }
 
-        await loginUser(valueLogin, password);
+        let response = await loginUser(valueLogin, password);
+
+        if (response && response.data && +response.data.EC === 0) {
+            //thành công
+            let data = {//check trong f12 / application
+                isAuthenticated: true,
+                token: 'fake token'
+            }
+
+            sessionStorage.setItem('account', JSON.stringify(data));//quản lý một phiên đăng nhập của người dùng
+
+            history.push('/users');
+            window.location.reload();
+        } if (response && response.data && +response.data.EC !== 0) {
+            //thất bại
+            toast.error(response.data.EM)
+        }
+        console.log(">>>check response: ", response.data);
 
     }
 
@@ -39,6 +60,16 @@ const Login = (props) => {
     const handldeCreateNewAccount = () => {
         history.push("/register");
     }
+    const handldePressEnter = (event) => {//sử dụng phím Enter để đăng nhập thay vì phải bấm nút
+        if (event.charCode === 13 && event.code === "Enter") {
+            handleLogin();
+        }
+    }
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            passwordInputRef.current.focus(); // Chuyển focus đến ô password
+        }
+    };
     return (
         <div className="login-container">
             <div className="container">
@@ -58,9 +89,12 @@ const Login = (props) => {
                             </div>
                             <input type='text' className={objValidInput.isValidValueLogin ? 'form-control' : 'is-invalid form-control'} placeholder='Email or phone number' value={valueLogin}
                                 onChange={(event) => { setValueLogin(event.target.value) }}
+                                onKeyPress={(event) => handleKeyDown(event)}
                             />
                             <input type='password' className={objValidInput.isValidPassword ? 'form-control' : 'is-invalid form-control'} placeholder='Password' value={password}
                                 onChange={(event) => { setPassword(event.target.value) }}
+                                onKeyPress={(event) => handldePressEnter(event)}
+                                ref={passwordInputRef}
                             />
                             <button className='btn btn-primary btn-lg' onClick={() => handleLogin()}>login</button>
                             <span className='text-center'>
