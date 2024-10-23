@@ -11,6 +11,24 @@ const loginUser = (valueLogin, password) => {//tạo link login
     })
 }
 
+const fetchAllUsers = (page, limit) => {
+    return axios.get(`http://localhost:3001/api/v1/user/read?page=${page}&limit=${limit}`, {//template string
+    })
+}
+
+const deleteUser = (user) => {
+    return axios.delete("http://localhost:3001/api/v1/user/delete", { data: { id: user.id } })
+}
+
+const fetchGroup = () => {
+    return axios.get(`http://localhost:3001/api/v1/group/read`, {
+    })
+}
+
+const createNewUser = (userData) => {
+    return axios.post("http://localhost:3001/api/v1/user/create", { ...userData })
+}
+
 export {
-    registerNewUser, loginUser
+    registerNewUser, loginUser, fetchAllUsers, deleteUser, fetchGroup, createNewUser
 }

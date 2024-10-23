@@ -1,5 +1,5 @@
 // import { button } from 'bootstrap';
-import react, { useState, useRef } from 'react';
+import react, { useState, useRef, useEffect } from 'react';
 import './login.scss';
 import { useHistory } from "react-router-dom";
 import { toast } from 'react-toastify';
@@ -50,7 +50,6 @@ const Login = (props) => {
             //thất bại
             toast.error(response.data.EM)
         }
-        console.log(">>>check response: ", response.data);
 
     }
 
@@ -69,7 +68,15 @@ const Login = (props) => {
         if (event.key === 'Enter') {
             passwordInputRef.current.focus(); // Chuyển focus đến ô password
         }
-    };
+    }
+
+    useEffect(() => {
+        let session = sessionStorage.getItem('account');//check xem người dùng đã đăng nhập vào hay chưa, account lấy trong F12/Application/SessionStogare
+        if (session) {//nếu không có thì sẽ đẩy về trang login
+            history.push("/");
+            window.location.reload();
+        }
+    }, [])
     return (
         <div className="login-container">
             <div className="container">
